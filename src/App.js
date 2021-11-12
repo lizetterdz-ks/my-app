@@ -1,24 +1,53 @@
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react'; 
+import Container from '@mui/material/Container'
+import Films from './components/Films'
+import NavAppBar from './components/FilmsHeading'
 import './App.css';
+// import { createTheme } from '@mui/material/styles';
+// import { green, purple } from '@mui/material/colors';
 
-function App() {
+// const theme = createTheme({
+//   palette: {
+//     primary: {
+//       main: purple[500],
+//     },
+//     secondary: {
+//       main: green[500],
+//     },
+//   },
+// });
+
+function App () {
+  const [films, setFilms] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchFilms () {
+      let res = await fetch('https://swapi.dev/api/films/')
+      let data = await res.json();
+      setFilms(data.results);
+      setLoading(false);
+    }
+    fetchFilms();
+  }, [])
+
+  console.log("films", films);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <img src='http://pngimg.com/uploads/star_wars_logo/star_wars_logo_PNG28.png' alt='Star Wars' style={{ width: '30vw'}} />
+      <NavAppBar />
+      { 
+        loading ?
+          <>
+            <h1 style={{}}>Loading...</h1>
+          </>
+        :
+        <Container sx={{padding: 2}}>
+          <Films data={films}/>
+        </Container>
+      }
+    </div> 
   );
 }
 
