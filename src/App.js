@@ -40,7 +40,7 @@ function App () {
       { 
         loading ?
           <>
-            <h1 style={{}}>Loading...</h1>
+            <h1 style={{color:'#ffff'}}>Loading...</h1>
           </>
         :
         <Container sx={{padding: 2}}>
