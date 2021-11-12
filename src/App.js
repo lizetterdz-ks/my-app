@@ -3,19 +3,6 @@ import Container from '@mui/material/Container'
 import Films from './components/Films'
 import NavAppBar from './components/FilmsHeading'
 import './App.css';
-// import { createTheme } from '@mui/material/styles';
-// import { green, purple } from '@mui/material/colors';
-
-// const theme = createTheme({
-//   palette: {
-//     primary: {
-//       main: purple[500],
-//     },
-//     secondary: {
-//       main: green[500],
-//     },
-//   },
-// });
 
 function App () {
   const [films, setFilms] = useState([]);
