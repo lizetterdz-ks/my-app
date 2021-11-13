@@ -9,22 +9,38 @@ import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import {filmsImages} from '../films-images'
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    color:'#ffff',
-    bgcolor: '#464F76',
-    border: '2px solid #464F76',
-    borderRadius: 3,
-    boxShadow: 24,
-    p: 4,
-  };
+import { ThemeContext } from '../App';
+import { styled, alpha } from '@mui/material/styles';
 
 export default function Films({ data }) {
+    const appTheme = React.useContext(ThemeContext);
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        color: appTheme.color,
+        bgcolor: appTheme.background,
+        border: '2px solid',
+        bordercolor: appTheme.color,
+        borderRadius: 3,
+        boxShadow: 24,
+        p: 4,
+    };
+
+    const ColorButton = styled(Button)(() => ({
+        color: appTheme.color,
+        border: '1px solid', 
+        bordercolor: appTheme.color,
+        '&:hover': {
+            border: '1px solid', 
+            bordercolor: appTheme.color,
+            backgroundColor: appTheme.accent,
+        },
+      }));
+
     const [open, setOpen] = React.useState(false);
     const [crawl, setCrawl] = React.useState('');
 
@@ -39,49 +55,49 @@ export default function Films({ data }) {
             {data.map((films, i) => {
 
                 return (
-                    <Grid item xs='auto' md={4} key={films.episode_id} id={films.episode_id}>
-                        <Card sx={{ width: 345, padding: 2}}>
+                    <Grid item xs='auto' md={4} key={films.episode_id}>
+                        <Card sx={{ width: 345, padding: 2, background: alpha(appTheme.background, 0.8)}}>
                             <CardMedia
                             component="img"
                             height="480"  
                             src={filmsImages[films.episode_id]}
                             />
                             <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
+                                <Typography gutterBottom variant="h5" component="div" color={appTheme.color}>
                                     {films.title}
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary">
+                                <Typography variant="body2" color={appTheme.color}>
                                     {films.director}
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary">
+                                <Typography variant="body2" color={appTheme.color}>
                                     {films.release_date}
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button 
+                                <ColorButton 
                                 size="small" 
                                 variant="outlined"
-                                color="secondary"
                                 onClick={()=> handleOpen(films.opening_crawl)}>
                                     See opening
-                                </Button>
-                                <Modal
-                                    open={open}
-                                    onClose={handleClose}
-                                    aria-labelledby="modal-modal-title"
-                                    aria-describedby="modal-modal-description"
-                                >
-                                    <Box sx={style}>
-                                        <Typography id="modal-modal-title" variant="h5" component="h1">
-                                        Opening crawl
-                                        </Typography>
-                                        <Typography id="modal-modal-description"  sx={{ mt: 2 }}>
-                                            {crawl}
-                                        </Typography>
-                                    </Box>
-                                </Modal>
+                                </ColorButton>
+                                
                             </CardActions>
                         </Card>
+                        <Modal
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={style}>
+                                <Typography id="modal-modal-title" variant="h5" component="h1">
+                                Opening crawl
+                                </Typography>
+                                <Typography id="modal-modal-description"  sx={{ mt: 2 }}>
+                                    {crawl}
+                                </Typography>
+                            </Box>
+                        </Modal>
                     </Grid>
                 )
             })}
