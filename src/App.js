@@ -124,7 +124,7 @@ function App () {
               <h1 style={{color:'#ffff'}}>Loading...</h1>
             </>
           :
-          <Container sx={{padding: 2}}>
+          <Container sx={{padding: 2}}>  
             <Films data={films} />
             <Button variant='contained' onClick={handleAdd} sx={{margin: 2}}>Load Added Films</Button>
             {
