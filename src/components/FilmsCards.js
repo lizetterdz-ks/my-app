@@ -15,22 +15,29 @@ import { styled, alpha } from '@mui/material/styles';
 export default function Films({ data }) {
     const appTheme = React.useContext(ThemeContext);
 
-    const style = {
+    const modalStyle = {
         position: 'absolute',
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: {
+            xs: 300, 
+            sm: 350, 
+            md: 375, 
+            lg: 400, 
+            xl: 425, 
+        },
         color: appTheme.color,
         bgcolor: appTheme.background,
         border: '2px solid',
         bordercolor: appTheme.color,
         borderRadius: 3,
         boxShadow: 24,
+        overflow: 'auto',
         p: 4,
     };
 
-    const ColorButton = styled(Button)(() => ({
+    const CrawlButton = styled(Button)(() => ({
         color: appTheme.color,
         border: '1px solid', 
         bordercolor: appTheme.color,
@@ -39,7 +46,7 @@ export default function Films({ data }) {
             bordercolor: appTheme.color,
             backgroundColor: appTheme.accent,
         },
-      }));
+    }));
 
     const [open, setOpen] = React.useState(false);
     const [crawl, setCrawl] = React.useState('');
@@ -74,33 +81,34 @@ export default function Films({ data }) {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <ColorButton 
+                                <CrawlButton 
                                 size="small" 
                                 variant="outlined"
                                 onClick={()=> handleOpen(films.opening_crawl)}>
                                     See opening
-                                </ColorButton>
+                                </CrawlButton>
                                 
                             </CardActions>
                         </Card>
-                        <Modal
-                            open={open}
-                            onClose={handleClose}
-                            aria-labelledby="modal-modal-title"
-                            aria-describedby="modal-modal-description"
-                        >
-                            <Box sx={style}>
-                                <Typography id="modal-modal-title" variant="h5" component="h1">
-                                Opening crawl
-                                </Typography>
-                                <Typography id="modal-modal-description"  sx={{ mt: 2 }}>
-                                    {crawl}
-                                </Typography>
-                            </Box>
-                        </Modal>
                     </Grid>
                 )
             })}
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={modalStyle}>
+                    <Typography id="modal-modal-title" variant="h5" component="h1">
+                    Opening crawl
+                    </Typography>
+                    <Typography id="modal-modal-description"  sx={{ mt: 2 }}>
+                        {crawl}
+                    </Typography>
+                </Box>
+            </Modal>
         </Grid>
     )
+    
 }

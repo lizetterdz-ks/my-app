@@ -2,6 +2,19 @@
   text-align: center;
 }
 
+.header-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.header-grid>img {
+  grid-column: 2/3;
+}
+
+.darkmodeswitch-container {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
